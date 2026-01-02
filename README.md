@@ -1,3 +1,4 @@
+
 ![](docs/mona.gif)
 
 # Avatarify Python
