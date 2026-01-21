@@ -1,4 +1,4 @@
-![](docs/mona.gif)
+i want to have access to editing and making changes![](docs/mona.gif)
 
 # Avatarify Python
 
