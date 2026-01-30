@@ -21,9 +21,12 @@ LANDMARK_SLICE_ARRAY = np.array([17, 22, 27, 31, 36, 42, 48, 60])
 
 if _platform == 'darwin':
     if not opt.is_client:
-        info('\nOnly remote GPU mode is supported for Mac (use --is-client and --connect options to connect to the server)')
-        info('Standalone version will be available lately!\n')
-        exit()
+        import torch
+        if hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
+            info('\nRunning on macOS with Apple Silicon MPS acceleration.')
+        else:
+            info('\nRunning on macOS in CPU mode (no MPS or CUDA available). Performance will be limited.')
+            info('For better performance, use --is-client to connect to a remote GPU server.\n')
 
 
 def is_new_frame_better(source, driving, predictor):
