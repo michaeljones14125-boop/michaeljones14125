@@ -3,4 +3,4 @@ PyYAML>=5.4
 requests>=2.28.0
 msgpack-numpy>=0.4.7.1
 pyzmq>=25.1.0
-opencv-python>=4.5.0
+opencv-python>=4.5.0,<4.11.0
