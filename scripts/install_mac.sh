@@ -40,6 +40,9 @@ else
     # Install PyTorch (pip handles platform detection automatically)
     pip install torch torchvision
 
+    # Install llvmlite/numba via conda (pip requires LLVM dev headers to build)
+    conda install -y -c conda-forge llvmlite numba
+
     # Clone First Order Motion Model
     if [ ! -d "fomm" ]; then
         git clone https://github.com/alievk/first-order-model.git fomm
