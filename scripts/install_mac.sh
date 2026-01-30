@@ -19,8 +19,8 @@ for arg in "$@"; do
     esac
 done
 
-# Use Python 3.9 (widely compatible with Apple Silicon and Intel)
-conda create -y -n $CONDA_ENV_NAME python=3.9
+# Use Python 3.11 for best compatibility with modern PyTorch and numpy 2.x
+conda create -y -n $CONDA_ENV_NAME python=3.11
 conda activate $CONDA_ENV_NAME
 
 if [[ $CLIENT_ONLY == 1 ]]; then
