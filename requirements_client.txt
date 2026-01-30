@@ -2,5 +2,5 @@ numpy>=1.21.0
 PyYAML>=5.4
 requests>=2.28.0
 msgpack-numpy>=0.4.7.1
-pyzmq>=20.0.0
+pyzmq>=25.1.0
 opencv-python>=4.5.0
