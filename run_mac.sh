@@ -12,4 +12,13 @@ CKPT=vox-adv-cpk.pth.tar
 
 export PYTHONPATH=$PYTHONPATH:$(pwd):$(pwd)/fomm
 
-python afy/cam_fomm.py --config "$CONFIG" --checkpoint "$CKPT" --relative --adapt_scale --no-pad $@
+# Supports both local mode and client mode.
+# Local mode: ./run_mac.sh
+# Client mode: ./run_mac.sh --is-client --in-addr SERVER:5557 --out-addr SERVER:5558
+python afy/cam_fomm.py \
+    --config "$CONFIG" \
+    --checkpoint "$CKPT" \
+    --relative \
+    --adapt_scale \
+    --no-pad \
+    $@

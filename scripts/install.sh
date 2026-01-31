@@ -29,3 +29,6 @@ rm -rf fomm 2> /dev/null
 git clone https://github.com/alievk/first-order-model.git fomm
 
 pip install -r requirements.txt
+
+# pyfakewebcam is Linux-only (requires v4l2loopback)
+pip install pyfakewebcam==0.1.0

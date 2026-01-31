@@ -8,6 +8,20 @@ import numpy as np
 import face_alignment
 
 
+def get_device(device=None):
+    """Select the best available compute device.
+
+    Priority: explicit device > CUDA > MPS (Apple Silicon) > CPU.
+    """
+    if device is not None:
+        return device
+    if torch.cuda.is_available():
+        return 'cuda'
+    if hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
+        return 'mps'
+    return 'cpu'
+
+
 def normalize_kp(kp_source, kp_driving, kp_driving_initial, adapt_movement_scale=False,
                  use_relative_movement=False, use_relative_jacobian=False):
     if adapt_movement_scale:
@@ -37,7 +51,7 @@ def to_tensor(a):
 
 class PredictorLocal:
     def __init__(self, config_path, checkpoint_path, relative=False, adapt_movement_scale=False, device=None, enc_downscale=1):
-        self.device = device or ('cuda' if torch.cuda.is_available() else 'cpu')
+        self.device = get_device(device)
         self.relative = relative
         self.adapt_movement_scale = adapt_movement_scale
         self.start_frame = None
@@ -46,7 +60,11 @@ class PredictorLocal:
         self.config_path = config_path
         self.checkpoint_path = checkpoint_path
         self.generator, self.kp_detector = self.load_checkpoints()
-        self.fa = face_alignment.FaceAlignment(face_alignment.LandmarksType._2D, flip_input=True, device=self.device)
+        # face_alignment >= 1.4 renamed _2D to TWO_D
+        landmarks_type = getattr(face_alignment.LandmarksType, 'TWO_D',
+                                 getattr(face_alignment.LandmarksType, '_2D', None))
+        fa_device = 'cpu' if self.device == 'mps' else self.device
+        self.fa = face_alignment.FaceAlignment(landmarks_type, flip_input=True, device=fa_device)
         self.source = None
         self.kp_source = None
         self.enc_downscale = enc_downscale

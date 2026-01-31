@@ -1,0 +1,6 @@
+# Full Mac requirements for local mode (Apple Silicon MPS or CPU)
+# For Apple Silicon Macs, PyTorch uses the MPS backend for GPU acceleration.
+# For Intel Macs, PyTorch runs on CPU (still functional but slower).
+-r requirements.txt
+torch>=1.13.0
+torchvision>=0.14.0
